@@ -17,7 +17,7 @@ import java.util.List;
 @Controller
 public class FileUploadController {
     // TODO: server url
-    String url = "http://0.0.0.0/uploads";
+    String url = "http://0.0.0.0/dari.tn/upload/upload";
 
 
     @RequestMapping(value="/upload", method= RequestMethod.POST)

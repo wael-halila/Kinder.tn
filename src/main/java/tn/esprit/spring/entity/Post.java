@@ -14,7 +14,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Post {
@@ -29,23 +35,21 @@ public class Post {
 	private int view_number;
 	private float statistic;
 
-
+	@ManyToOne
+	@JoinColumn(name="userId")
+	private  User user;
 	
+
+
+
+
+	@JsonIgnore
 	@OneToMany(mappedBy="post",cascade={ CascadeType.ALL},fetch=FetchType.EAGER)
 	private List<Comment> comments =  new ArrayList<>();
 	
 	//constructeur paramétré
 	
-	public Post(int id, Favorite favorite, int view_number, float statistic) {
-		super();
-		this.id = id;
-		this.favorite = favorite;
-		this.view_number = view_number;
-		this.statistic = statistic;
-		
-	}
-	//vide
-	
+
 	public Post(int ref, String message) {
 		super();
 		
@@ -102,13 +106,23 @@ public class Post {
 		this.comments = comments;
 	}
 
-	public Post(int id, String message, Favorite favorite, int view_number, float statistic, List<Comment> comments) {
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Post(int id, String message, Favorite favorite, int view_number, float statistic, User user,
+			List<Comment> comments) {
 		super();
 		this.id = id;
 		this.message = message;
 		this.favorite = favorite;
 		this.view_number = view_number;
 		this.statistic = statistic;
+		this.user = user;
 		this.comments = comments;
 	}
 

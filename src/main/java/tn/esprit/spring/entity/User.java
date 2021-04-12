@@ -16,6 +16,8 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class User implements Serializable {
 	   private static final long serialVersionUID = 1L;
@@ -26,27 +28,10 @@ public class User implements Serializable {
 	   private String email;
 	   private String telNum;
 	   private String firstName; 
-	   public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	private String lastName ; 
-		
-		public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-		public String getTelNum() {
-		return telNum;
-	}
-	public void setTelNum(String telNum) {
-		this.telNum = telNum;
-	}
-		
+	   
+	@JsonIgnore
+	@OneToMany	(mappedBy= "user",cascade=CascadeType.MERGE)
+	private List <Post> post;
 	
 
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -66,7 +51,24 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+	public String getTelNum() {
+		return telNum;
+	}
+	public void setTelNum(String telNum) {
+		this.telNum = telNum;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public List<Post> getPost() {
+		return post;
+	}
+	public void setPost(List<Post> post) {
+		this.post = post;
+	}
 	public List<Claim> getClaims() {
 		return claims;
 	}
@@ -79,31 +81,24 @@ public class User implements Serializable {
 	public void setKindergarten(Kindergarten kindergarten) {
 		this.kindergarten = kindergarten;
 	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public User(Long idUser, String email, String telNum, String firstName, List<Post> post, List<Claim> claims,
+			Kindergarten kindergarten) {
+		super();
+		this.idUser = idUser;
+		this.email = email;
+		this.telNum = telNum;
+		this.firstName = firstName;
+		this.post = post;
+		this.claims = claims;
+		this.kindergarten = kindergarten;
+	}
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public User(Long idUser, String email, 
-			List<Claim> claims, Kindergarten kindergarten , String telNum) {
-		super();
-		this.idUser = idUser;
-		this.email = email;
-		this.claims = claims;
-		this.kindergarten = kindergarten;
-		this.telNum= telNum;
-	}
-	@Override
-	public String toString() {
-		return "User [idUser=" + idUser + ", email=" + email + ", telNum=" + telNum + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", claims=" + claims + ", kindergarten=" + kindergarten + "]";
-	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

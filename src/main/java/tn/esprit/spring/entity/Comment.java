@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 
@@ -31,13 +33,14 @@ public class Comment implements Serializable{
 	
 	///evaluation
 	
-	
+@JsonIgnore
 	@OneToMany(mappedBy="comment" , cascade=CascadeType.MERGE)
-	@JsonBackReference
+	
 	private List<Comment_evaluation> ratings;
 	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="idSubject",referencedColumnName="id")
 	private Subject subject;
+	
 	@ManyToOne
 	private Post post;
 

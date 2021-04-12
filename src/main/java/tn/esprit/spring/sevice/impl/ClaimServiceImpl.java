@@ -210,7 +210,7 @@ public class ClaimServiceImpl implements IClaimService{
 		int nb =0;
 			 nb=(CountClaimByKindergarden( k.getName()));
 			
-			if (nb>=5){
+			if (nb>=2){
 				
 				k.setBlocked(true);
 				k.setBlockDate(LocalDate.now());
@@ -238,7 +238,7 @@ public class ClaimServiceImpl implements IClaimService{
 				userepo.save(us);
 
 				Twilio.init(ACCOUNT_SID, AUTH_ID);
-				Message.creator(new PhoneNumber(k.getUser().getTelNum()), new PhoneNumber("+18563932333"),
+				Message.creator(new PhoneNumber(k.getTelNum()), new PhoneNumber("+18563932333"),
 				  "Dear Kindergarten  Your subscription with us is unblocked now, please respect our conditions to keep your kindergarden on our platform.").create();
 
 		
