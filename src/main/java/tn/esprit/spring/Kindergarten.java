@@ -11,16 +11,24 @@ import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
+
 import tn.esprit.spring.chaat.services.ChatbotUtilService;
 
 
 
 
+
 @SpringBootApplication
+
 @EnableAutoConfiguration
 public class Kindergarten implements CommandLineRunner{
 	@Autowired
 	ChatbotUtilService chatbot;
+
+
+
+	
+
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Kindergarten.class, args);
