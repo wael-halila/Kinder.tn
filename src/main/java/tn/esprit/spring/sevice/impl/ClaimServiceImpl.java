@@ -2,26 +2,19 @@ package tn.esprit.spring.sevice.impl;
 
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
-
-
-import tn.esprit.spring.entity.Kindergarten;
 import tn.esprit.spring.entity.Claim;
 import tn.esprit.spring.entity.ClaimCategory;
 import tn.esprit.spring.entity.ClaimEvaluation;
 import tn.esprit.spring.entity.ClaimStatus;
-import tn.esprit.spring.entity.Comment;
-import tn.esprit.spring.entity.Comment_evaluation;
 import tn.esprit.spring.entity.Kindergarten;
 import tn.esprit.spring.entity.Subject;
 import tn.esprit.spring.entity.User;
@@ -34,12 +27,15 @@ import tn.esprit.spring.sevice.interfece.IClaimService;
 
 
 @Service
+
 public class ClaimServiceImpl implements IClaimService{
 	public String msg;
 	@Autowired
 	ClaimRepository claimrepo;
 	@Autowired
 	SubjectService subserv ;
+	@Autowired
+	MailService mls;
 	@Autowired
 	DictionaryRepository dictrepo	;
 	@Autowired
@@ -48,7 +44,7 @@ public class ClaimServiceImpl implements IClaimService{
 	ClaimEvRepository claimevrepo;
 	@Autowired
 	KindergartenRepository kinderrepo; 
-	
+
 
 	 private final static String ACCOUNT_SID = "AC6241403c506f64570e2eead5494891f0";
 	   private final static String AUTH_ID = "2d6c0633c8bd526f6919c27dbefd0530";
@@ -223,7 +219,8 @@ public class ClaimServiceImpl implements IClaimService{
 
 	@Override
 	public void unBlockSubscription(String kinder) {
-       Kindergarten k=kinderrepo.findByName(kinder);
+		
+      Kindergarten k=kinderrepo.findByName(kinder);
 		
 		
 		User us =userepo.findByidUser(k.getUser().getIdUser());
@@ -233,15 +230,23 @@ public class ClaimServiceImpl implements IClaimService{
 
 			k.setUnBlockDate(LocalDate.now());
 
-			
+				
 				k.setBlocked(false);
 				userepo.save(us);
+				send();
+			
+	}
+			
+				public String send() {
 
-				Twilio.init(ACCOUNT_SID, AUTH_ID);
-				Message.creator(new PhoneNumber(k.getTelNum()), new PhoneNumber("+18563932333"),
-				  "Dear Kindergarten  Your subscription with us is unblocked now, please respect our conditions to keep your kindergarden on our platform.").create();
-
-		
+				
+					try {
+						mls.sendEmail();
+					} catch (MailException mailException) {
+						System.out.println(mailException);
+					}
+					return "Congratulations! Your mail has been send to the user.";
+				}
 	}
 /*
 	@Override
@@ -265,7 +270,7 @@ public class ClaimServiceImpl implements IClaimService{
 		
 	}*/
 		
-	}
+	
 
 	
 

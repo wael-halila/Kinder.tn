@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tn.esprit.spring.entity.Claim;
 import tn.esprit.spring.entity.ClaimCategory;
 import tn.esprit.spring.entity.ClaimEvaluation;
+import tn.esprit.spring.entity.Kindergarten;
 import tn.esprit.spring.sevice.impl.ClaimServiceImpl;
 import tn.esprit.spring.sevice.impl.KindergartenServiceImpl;
 import tn.esprit.spring.sevice.interfece.IClaimService;
@@ -26,6 +27,7 @@ import tn.esprit.spring.sevice.interfece.IClaimService;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/Claim")
+
 public class RestControllerClaim {
 	@Autowired
 	IClaimService iClaimSer; 
@@ -34,6 +36,7 @@ public class RestControllerClaim {
 	ClaimServiceImpl claimService;
 	@Autowired
 	KindergartenServiceImpl kinderService; 
+	
 	
 
 // URL: http://localhost:8089/Pidev/servlet/addClaim
@@ -163,6 +166,7 @@ public class RestControllerClaim {
 
 	          claimService.unBlockSubscription(name);
 }
+          
           // 
         /*  @PostMapping("/send-mail")
       	public String send() {
