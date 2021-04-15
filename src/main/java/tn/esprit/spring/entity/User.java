@@ -100,7 +100,47 @@ public class User implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	
+//partie salma
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private Set<KindergartenBus> bus;
 	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "users")
+    private List<Appointement> appointements;
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+	private Set<Child> children;
+	
+	@ManyToOne(cascade = CascadeType.DETACH)
+	@JoinColumn(name = "role")
+	private Role role;
+	
+	
+		public Set<KindergartenBus> getBus() {
+		return bus;
+	}
+	public void setBus(Set<KindergartenBus> bus) {
+		this.bus = bus;
+	}
+	public List<Appointement> getAppointements() {
+		return appointements;
+	}
+	public void setAppointements(List<Appointement> appointements) {
+		this.appointements = appointements;
+	}
+	public Set<Child> getChildren() {
+		return children;
+	}
+	public void setChildren(Set<Child> children) {
+		this.children = children;
+	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
 	
 	   
 	
