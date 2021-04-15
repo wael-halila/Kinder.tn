@@ -140,5 +140,21 @@ public class Kindergarten implements Serializable {
 		this.claim = claim;
 		this.name=name; 
 	}
+	
+	//partie salma
+	
+	@JsonIgnore
+	@OneToMany(cascade= CascadeType.ALL, mappedBy= "kindergarten")
+	private Set<Appointement> appointements;
+
+	
+		public Set<Appointement> getAppointements() {
+		return appointements;
+	}
+
+
+	public void setAppointements(Set<Appointement> appointements) {
+		this.appointements = appointements;
+	}
 
 }
